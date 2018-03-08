@@ -164,4 +164,9 @@
     WHERE username = #{username}
     AND password = #{password}
   </select>
+
+  <select id="checkEmail" resultType="int" parameterType="string">
+    SELECT count(1) FROM mmall_user
+    WHERE email = #{email}
+  </select>
 </mapper>
