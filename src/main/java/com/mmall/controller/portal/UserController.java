@@ -69,6 +69,6 @@
      }
 
      public ServerResponse<String> checkValid(String str, String type) {
-
+         return null;
      }
  }

@@ -23,7 +23,7 @@
         <property name="fileEncoding" value="utf-8"/>
     </bean>
 
-
+    <!--数据库连接池的配置-->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${db.driverClassName}"/>
         <property name="url" value="${db.url}"/>
@@ -57,9 +57,12 @@
         <property name="validationQuery" value="SELECT 1 FROM dual"/>
     </bean>
 
+
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath*:mappers/*Mapper.xml"></property>
+        <property name="mapperLocations" value="classpath*:mappers/*Mapper.xml">
+
+        </property>
 
         <!-- 分页插件 -->
         <property name="plugins">
@@ -76,6 +79,7 @@
 
     </bean>
 
+    <!--mybatis 的扫描-->
     <bean name="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.mmall.dao"/>
     </bean>
@@ -87,6 +91,5 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="rollbackOnCommitFailure" value="true"/>
     </bean>
-
 
 </beans>

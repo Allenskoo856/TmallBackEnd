@@ -143,6 +143,7 @@
             <!--<scope>test</scope>-->
         </dependency>
 
+        <!--时间处理的jar包-->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
@@ -268,6 +269,7 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
+                    <!--支付宝官方的SDk来集成-->
                     <compilerArguments>
                         <extdirs>${project.basedir}/src/main/webapp/WEB-INF/lib</extdirs>
                     </compilerArguments>
@@ -276,6 +278,5 @@
         </plugins>
 
     </build>
-
 
 </project>
