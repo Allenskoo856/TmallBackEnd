@@ -44,9 +44,9 @@
       * @return ServerResponse<User>
       */
      @RequestMapping(value = "login.do", method = RequestMethod.POST)
-     @ResponseBody
+     @ResponseBody // 自动将返回的值序列化成json对象
      public ServerResponse<User> login(String username, String password, HttpSession session) {
-
+        // service-mybatis-dao
          ServerResponse<User> response = iUserService.login(username, password);
          if (response.isSuccess()) {
              session.setAttribute(Const.CURRENT_USER, response.getData());

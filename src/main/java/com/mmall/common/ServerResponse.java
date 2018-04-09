@@ -21,10 +21,12 @@
   * @create 2018/3/8 0008
   * @since 1.0.0
   */
- @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
- /*
-  *保证序列化json对象的时候, 如果为null的对象,key也会消失
-  */
+ @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL) //不要null
+/**
+ * 保证序列化json对象的时候, 如果为null的对象,key也会消失
+ * 高富用的，通用相应对象
+ */
+
  public class ServerResponse<T> implements Serializable {
      private int status;
      private String msg;
@@ -67,32 +69,75 @@
          return msg;
      }
 
+     /**
+      * 创建响应成功信息代码
+      * @param <T>
+      * @return
+      */
      public static <T> ServerResponse<T> createBySuccess() {
          return new ServerResponse<T>(ResponseCode.SUCCESS.getCode());
      }
 
+     /**
+      * 创建响应成功信息
+      * @param msg
+      * @param <T>
+      * @return
+      */
      public static <T> ServerResponse<T> createBySuccessMessage(String msg) {
          return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(), msg);
      }
 
+     /**
+      * 根据传入的数据不同，创建响应的代码片段的代码
+      * @param data
+      * @param <T>
+      * @return
+      */
      public static <T> ServerResponse<T> createBySuccess(T data) {
          return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(), data);
      }
 
+     /**
+      *创建成功的服务器响应，需要把消息和数据仪器传入
+      * @param msg
+      * @param data
+      * @param <T>
+      * @return
+      */
      public static <T> ServerResponse<T> createBySuccess(String msg, T data) {
          return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(), msg, data);
      }
 
+     /**
+      * 传入错误的响应代码和信息
+      * @param <T>
+      * @return
+      */
      public static <T> ServerResponse<T> createByError() {
          return new ServerResponse<T>(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDesc());
      }
 
+     /**
+      * 传入错误的响应信息
+      * @param errorMassage
+      * @param <T>
+      * @return
+      */
      public static <T> ServerResponse<T> createByErrorMassage(String errorMassage) {
          return new ServerResponse<T>(ResponseCode.ERROR.getCode(), errorMassage);
      }
 
+     /**
+      *
+      * @param errorCode
+      * @param errorMessage
+      * @param <T>
+      * @return
+      */
      public static <T> ServerResponse<T> createByErrorCodeMassage(int errorCode, String errorMessage) {
          return new ServerResponse<T>(errorCode, errorMessage);
      }
+
 
  }

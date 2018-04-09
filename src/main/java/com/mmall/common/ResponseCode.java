@@ -17,6 +17,12 @@
   * @since 1.0.0
   */
  public enum ResponseCode {
+     /**
+      * success: 成功
+      * error： 失败
+      * need_login: 需要登录
+      * illegal_argument: 非法的参数
+      */
      SUCCESS(0, "success"),
      ERROR(1, "error"),
      NEED_LOGIN(10, "NEED_LOGIN"),
@@ -37,6 +43,4 @@
          this.code = code;
          this.desc = desc;
      }
-
-
  }
