@@ -17,6 +17,7 @@
   * @since 1.0.0
   */
  public enum ResponseCode {
+
      /**
       * success: 成功
       * error： 失败

@@ -15,15 +15,18 @@
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
+
   <sql id="Base_Column_List" >
     id, username, password, email, phone, question, answer, role, create_time, update_time
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from mmall_user
     where id = #{id,jdbcType=INTEGER}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from mmall_user
     where id = #{id,jdbcType=INTEGER}
@@ -169,4 +172,12 @@
     SELECT count(1) FROM mmall_user
     WHERE email = #{email}
   </select>
+
+    <select id="selectQustionByUserName" resultType="string" parameterType="string">
+      SELECT question FROM mmall_user WHERE username = #{username}
+    </select>
+
+    <select id="checkAnswer" resultType="int" parameterType="map">
+      SELECT count(1) FROM mmall_user WHERE username = #{username} AND question = #{question} AND answer = #{answer}
+    </select>
 </mapper>

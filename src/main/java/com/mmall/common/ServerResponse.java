@@ -5,7 +5,6 @@
   * Date:     2018/3/8 0008 17:01
   * Description:
   */
-
  package com.mmall.common;
 
  import org.codehaus.jackson.annotate.JsonIgnore;
@@ -109,6 +108,7 @@
          return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(), msg, data);
      }
 
+
      /**
       * 传入错误的响应代码和信息
       * @param <T>
@@ -117,6 +117,7 @@
      public static <T> ServerResponse<T> createByError() {
          return new ServerResponse<T>(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getDesc());
      }
+
 
      /**
       * 传入错误的响应信息
@@ -128,6 +129,7 @@
          return new ServerResponse<T>(ResponseCode.ERROR.getCode(), errorMassage);
      }
 
+
      /**
       *
       * @param errorCode
@@ -138,6 +140,4 @@
      public static <T> ServerResponse<T> createByErrorCodeMassage(int errorCode, String errorMessage) {
          return new ServerResponse<T>(errorCode, errorMessage);
      }
-
-
  }

@@ -10,8 +10,10 @@
 
  import com.mmall.common.Const;
  import com.mmall.common.ServerResponse;
+ import com.mmall.common.TokenCache;
  import com.mmall.pojo.User;
  import com.mmall.service.IUserService;
+ import org.apache.commons.lang3.StringUtils;
  import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.stereotype.Controller;
  import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,23 +54,93 @@
              session.setAttribute(Const.CURRENT_USER, response.getData());
          }
          return response;
-         // service
      }
 
-     @RequestMapping(value = "logout.do",method = RequestMethod.POST)
+
+     /**
+      *  登出操作
+      * @param session session
+      * @return ServerResponse<String>
+      */
+     @RequestMapping(value = "logout.do",method = RequestMethod.GET)
      @ResponseBody
      public ServerResponse<String> logout(HttpSession session){
          session.removeAttribute(Const.CURRENT_USER);
          return ServerResponse.createBySuccess();
      }
 
-     @RequestMapping(value = "register.do",method = RequestMethod.POST)
+     /**
+      * 注册接口
+      * @param user user
+      * @return ServerResponse<String>
+      */
+     @RequestMapping(value = "register.do",method = RequestMethod.GET)
      @ResponseBody
      public ServerResponse<String> register(User user) {
          return iUserService.register(user);
      }
 
+     /**
+      * 校验接口传过来的是否正确验证邮箱、以及帐户名
+      * @param str 传入的字符串数值
+      * @param type 有两个 username、email
+      * @return 返回是否邮箱以及帐户名注册重复
+      */
+     @RequestMapping(value = "checkValid.do", method = RequestMethod.GET)
+     @ResponseBody
      public ServerResponse<String> checkValid(String str, String type) {
-         return null;
+         return iUserService.checkValid(str, type);
+     }
+
+
+     /**
+      * 获得用户登录的信息
+      * @param session
+      * @return 成功返回用户信息，失败错误信息
+      */
+     @RequestMapping(value = "get_user_info.do", method = RequestMethod.GET)
+     @ResponseBody
+     public ServerResponse<User> getUserInfo(HttpSession session) {
+         User user = (User) session.getAttribute(Const.CURRENT_USER);
+         if (user != null) {
+             return ServerResponse.createBySuccess(user);
+         }
+         return ServerResponse.createByErrorMassage("用户未登录，无法获得当前用户信息");
+     }
+
+     /**
+      *   根据用户名返回忘记密码的提示问题
+      * @param username 用户名提示
+      * @return  成功返回密码提示问题， 失败返回错误提示
+      */
+     @RequestMapping(value = "forget_get_question.do", method = RequestMethod.GET)
+     @ResponseBody
+     public ServerResponse<String> forgetGetQuestion(String username) {
+         return iUserService.selectQuestion(username);
+     }
+
+     /**
+      * 传入用户名，问题，和答案
+      * @param username
+      * @param question
+      * @param answer
+      * @return 回答正确 返回TOKEN， 错误提示
+      */
+     @RequestMapping(value = "forget_check_answer.do", method = RequestMethod.GET)
+     @ResponseBody
+     public ServerResponse<String> forgetCheckAnswer(String username, String question, String answer) {
+         return iUserService.checkAnswer(username, question, answer);
+     }
+
+     public ServerResponse<String> forgetRestPassword(String username, String passwordNew, String forgetToken) {
+         if (StringUtils.isNoneBlank(forgetToken)) {
+             return ServerResponse.createByErrorMassage("参数错误，token需要传递");
+         }
+         ServerResponse validResponse = this.checkValid(username, Const.USERNAME);
+         if (validResponse.isSuccess()) {
+             return ServerResponse.createByErrorMassage("用户不存在");
+         }
+
+         String token = TokenCache.getKey(Const.TOKEN_PREFIX + username);
      }
  }
