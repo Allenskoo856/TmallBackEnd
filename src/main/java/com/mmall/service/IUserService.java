@@ -30,4 +30,10 @@ public interface IUserService {
     ServerResponse selectQuestion(String username);
 
     ServerResponse<String> checkAnswer(String username, String qusetion, String answer);
- }
+
+    ServerResponse<String> forgetRestPassword(String username, String passwordNew, String forgetToken);
+
+    ServerResponse<String> resetPassword(String passwordNew, String passwordOld, User user);
+
+    ServerResponse<User> updateInformation(User user);
+}

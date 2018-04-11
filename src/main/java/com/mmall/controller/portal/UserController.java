@@ -9,6 +9,7 @@
  package com.mmall.controller.portal;
 
  import com.mmall.common.Const;
+ import com.mmall.common.ResponseCode;
  import com.mmall.common.ServerResponse;
  import com.mmall.common.TokenCache;
  import com.mmall.pojo.User;
@@ -108,6 +109,7 @@
          return ServerResponse.createByErrorMassage("用户未登录，无法获得当前用户信息");
      }
 
+
      /**
       *   根据用户名返回忘记密码的提示问题
       * @param username 用户名提示
@@ -118,6 +120,7 @@
      public ServerResponse<String> forgetGetQuestion(String username) {
          return iUserService.selectQuestion(username);
      }
+
 
      /**
       * 传入用户名，问题，和答案
@@ -132,15 +135,68 @@
          return iUserService.checkAnswer(username, question, answer);
      }
 
-     public ServerResponse<String> forgetRestPassword(String username, String passwordNew, String forgetToken) {
-         if (StringUtils.isNoneBlank(forgetToken)) {
-             return ServerResponse.createByErrorMassage("参数错误，token需要传递");
-         }
-         ServerResponse validResponse = this.checkValid(username, Const.USERNAME);
-         if (validResponse.isSuccess()) {
-             return ServerResponse.createByErrorMassage("用户不存在");
-         }
 
-         String token = TokenCache.getKey(Const.TOKEN_PREFIX + username);
+     /**
+      * 传入用户名、新密码、以及token来重置密码
+      * @param username
+      * @param passwordNew
+      * @param forgetToken
+      * @return 返回成功提示信息，重置密码成功，返回失败则提示修改密码失败
+      */
+     @RequestMapping(value = "forget_reset_password.do", method = RequestMethod.GET)
+     @ResponseBody
+     public ServerResponse<String> forgetRestPassword(String username, String passwordNew, String forgetToken) {
+         return iUserService.forgetRestPassword(username, passwordNew, forgetToken);
+     }
+
+     /**
+      * 已登陆的用户，重置密码功能，
+      * @param session  登录用户的 session
+      * @param passwordOld  原来的旧密码
+      * @param passwordNew  新密码
+      * @return  返回重置信息的成功与否
+      */
+     @RequestMapping(value = "reset_password.do", method = RequestMethod.GET)
+     @ResponseBody
+     public ServerResponse<String> resetPassword(HttpSession session, String passwordOld, String passwordNew) {
+         User user = (User) session.getAttribute(Const.CURRENT_USER);
+         if (user == null) {
+             return ServerResponse.createByErrorMassage("用户未登录");
+         }
+         return iUserService.resetPassword(passwordNew, passwordOld,user);
+     }
+
+     /**
+      * 登录用户更新个人的信息
+      * @param session 登录的session
+      * @param user  传入的用户
+      * @return 更新成功，返回提示信息和跟新之后的用户信息，更新失败返回 错误信息
+      */
+     @RequestMapping(value = "update_information.do", method = RequestMethod.GET)
+     @ResponseBody
+     public ServerResponse<User> update_information(HttpSession session, User user) {
+         User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+         if (currentUser == null) {
+             return ServerResponse.createByErrorMassage("用户未登录");
+         }
+         // 防止越权问题时候，利用用户前端传入的id 非用户原始的id
+         user.setId(currentUser.getId());
+         // 不允许调用接口强行修改用户名
+         user.setUsername(currentUser.getUsername());
+         ServerResponse<User> response = iUserService.updateInformation(user);
+
+         // 更新用户信息
+         if (response.isSuccess()) {
+             response.getData().setUsername(currentUser.getUsername());
+             session.setAttribute(Const.CURRENT_USER, response.getData());
+         }
+         return response;
+     }
+
+     public ServerResponse<User> get_information(HttpSession session) {
+         User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+         if (currentUser == null) {
+             return ServerResponse.createByErrorCodeMassage(ResponseCode.NEED_LOGIN.getCode(),"未登录需要强制登录");
+         }
      }
  }
