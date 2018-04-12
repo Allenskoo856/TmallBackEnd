@@ -251,4 +251,18 @@
          user.setPassword(StringUtils.EMPTY);
          return ServerResponse.createBySuccess(user);
      }
+
+     /**
+      * 后台管理员账号的校验
+      * @param user
+      * @return  如果是管理员则返回true 否则提示错误信息
+      */
+     // backEnd 校验
+     @Override
+     public ServerResponse checkAdminRole(User user) {
+         if (user != null && user.getRole() == Const.Role.ROLE_ADMIN) {
+             return ServerResponse.createBySuccess();
+         }
+         return ServerResponse.createByError();
+     }
  }
