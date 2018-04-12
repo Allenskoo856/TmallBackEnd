@@ -83,7 +83,7 @@
              return ServerResponse.createByErrorMassage("注册失败");
          }
 
-         return ServerResponse.createByErrorMassage("注册成功");
+         return ServerResponse.createBySuccessMessage("注册成功");
      }
 
      /**
@@ -162,7 +162,7 @@
       */
      @Override
      public ServerResponse<String> forgetRestPassword(String username, String passwordNew, String forgetToken) {
-         if (StringUtils.isNoneBlank(forgetToken)) {
+         if (StringUtils.isBlank(forgetToken)) {
              return ServerResponse.createByErrorMassage("参数错误，token需要传递");
          }
          ServerResponse validResponse = this.checkValid(username, Const.USERNAME);
@@ -171,6 +171,7 @@
          }
 
          String token = TokenCache.getKey(Const.TOKEN_PREFIX + username);
+
          if (StringUtils.isBlank(token)) {
              return ServerResponse.createByErrorMassage("token无效或者过期");
          }
@@ -233,5 +234,21 @@
              return ServerResponse.createBySuccess("更新个人信息成功", updateUser);
          }
          return ServerResponse.createByErrorMassage("更新个人信息失败");
+     }
+
+
+     /**
+      *
+      * @param userId
+      * @return
+      */
+     @Override
+     public ServerResponse<User> getInformation(Integer userId) {
+         User user = userMapper.selectByPrimaryKey(userId);
+         if (user == null) {
+             return ServerResponse.createByErrorMassage("找不到当前用户");
+         }
+         user.setPassword(StringUtils.EMPTY);
+         return ServerResponse.createBySuccess(user);
      }
  }

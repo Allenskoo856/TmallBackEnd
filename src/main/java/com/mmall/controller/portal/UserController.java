@@ -9,19 +9,17 @@
  package com.mmall.controller.portal;
 
  import com.mmall.common.Const;
- import com.mmall.common.ResponseCode;
- import com.mmall.common.ServerResponse;
- import com.mmall.common.TokenCache;
- import com.mmall.pojo.User;
- import com.mmall.service.IUserService;
- import org.apache.commons.lang3.StringUtils;
- import org.springframework.beans.factory.annotation.Autowired;
- import org.springframework.stereotype.Controller;
- import org.springframework.web.bind.annotation.RequestMapping;
- import org.springframework.web.bind.annotation.RequestMethod;
- import org.springframework.web.bind.annotation.ResponseBody;
+import com.mmall.common.ResponseCode;
+import com.mmall.common.ServerResponse;
+import com.mmall.pojo.User;
+import com.mmall.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
- import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
  /**
   * 〈一句话功能简述〉<br>
@@ -63,7 +61,7 @@
       * @param session session
       * @return ServerResponse<String>
       */
-     @RequestMapping(value = "logout.do",method = RequestMethod.GET)
+     @RequestMapping(value = "logout.do",method = RequestMethod.POST)
      @ResponseBody
      public ServerResponse<String> logout(HttpSession session){
          session.removeAttribute(Const.CURRENT_USER);
@@ -75,7 +73,7 @@
       * @param user user
       * @return ServerResponse<String>
       */
-     @RequestMapping(value = "register.do",method = RequestMethod.GET)
+     @RequestMapping(value = "register.do",method = RequestMethod.POST)
      @ResponseBody
      public ServerResponse<String> register(User user) {
          return iUserService.register(user);
@@ -87,7 +85,7 @@
       * @param type 有两个 username、email
       * @return 返回是否邮箱以及帐户名注册重复
       */
-     @RequestMapping(value = "checkValid.do", method = RequestMethod.GET)
+     @RequestMapping(value = "check_valid.do", method = RequestMethod.POST)
      @ResponseBody
      public ServerResponse<String> checkValid(String str, String type) {
          return iUserService.checkValid(str, type);
@@ -99,7 +97,7 @@
       * @param session
       * @return 成功返回用户信息，失败错误信息
       */
-     @RequestMapping(value = "get_user_info.do", method = RequestMethod.GET)
+     @RequestMapping(value = "get_user_info.do", method = RequestMethod.POST)
      @ResponseBody
      public ServerResponse<User> getUserInfo(HttpSession session) {
          User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -115,7 +113,7 @@
       * @param username 用户名提示
       * @return  成功返回密码提示问题， 失败返回错误提示
       */
-     @RequestMapping(value = "forget_get_question.do", method = RequestMethod.GET)
+     @RequestMapping(value = "forget_get_question.do", method = RequestMethod.POST)
      @ResponseBody
      public ServerResponse<String> forgetGetQuestion(String username) {
          return iUserService.selectQuestion(username);
@@ -129,7 +127,7 @@
       * @param answer
       * @return 回答正确 返回TOKEN， 错误提示
       */
-     @RequestMapping(value = "forget_check_answer.do", method = RequestMethod.GET)
+     @RequestMapping(value = "forget_check_answer.do", method = RequestMethod.POST)
      @ResponseBody
      public ServerResponse<String> forgetCheckAnswer(String username, String question, String answer) {
          return iUserService.checkAnswer(username, question, answer);
@@ -143,7 +141,7 @@
       * @param forgetToken
       * @return 返回成功提示信息，重置密码成功，返回失败则提示修改密码失败
       */
-     @RequestMapping(value = "forget_reset_password.do", method = RequestMethod.GET)
+     @RequestMapping(value = "forget_reset_password.do", method = RequestMethod.POST)
      @ResponseBody
      public ServerResponse<String> forgetRestPassword(String username, String passwordNew, String forgetToken) {
          return iUserService.forgetRestPassword(username, passwordNew, forgetToken);
@@ -156,7 +154,7 @@
       * @param passwordNew  新密码
       * @return  返回重置信息的成功与否
       */
-     @RequestMapping(value = "reset_password.do", method = RequestMethod.GET)
+     @RequestMapping(value = "reset_password.do", method = RequestMethod.POST)
      @ResponseBody
      public ServerResponse<String> resetPassword(HttpSession session, String passwordOld, String passwordNew) {
          User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -172,7 +170,7 @@
       * @param user  传入的用户
       * @return 更新成功，返回提示信息和跟新之后的用户信息，更新失败返回 错误信息
       */
-     @RequestMapping(value = "update_information.do", method = RequestMethod.GET)
+     @RequestMapping(value = "update_information.do", method = RequestMethod.POST)
      @ResponseBody
      public ServerResponse<User> update_information(HttpSession session, User user) {
          User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
@@ -193,10 +191,18 @@
          return response;
      }
 
+     /**
+      *  获得用户的登录信息，请求方式是session
+      * @param session
+      * @return 成功返回用户登录的成功信息，失败就显示未登录的提示信息
+      */
+     @RequestMapping(value = "get_information.do", method = RequestMethod.POST)
+     @ResponseBody
      public ServerResponse<User> get_information(HttpSession session) {
          User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
          if (currentUser == null) {
-             return ServerResponse.createByErrorCodeMassage(ResponseCode.NEED_LOGIN.getCode(),"未登录需要强制登录");
+             return ServerResponse.createByErrorCodeMassage(ResponseCode.NEED_LOGIN.getCode(),"未登录需要强制登录status=10");
          }
+         return iUserService.getInformation(currentUser.getId());
      }
  }
