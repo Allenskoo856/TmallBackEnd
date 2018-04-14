@@ -7,13 +7,14 @@ import com.mmall.pojo.Product;
 import com.mmall.pojo.User;
 import com.mmall.service.IProductService;
 import com.mmall.service.IUserService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -98,7 +99,7 @@ public class ProductManageController {
     }
 
     /**
-     * 接口-获得产品列表的信息
+     * 接口-获得产品列表的信息--利用（分页逻辑）
      * @param session
      * @param pageNum  初始的页码数
      * @param pageSize  默认的前台的页码数字
@@ -113,9 +114,37 @@ public class ProductManageController {
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             // 填充我们的业务代码
-
+            return iProductService.getProductList(pageNum, pageSize);
         } else {
             return ServerResponse.createByErrorMassage("你所在的用户组无权限操作");
         }
+    }
+
+
+    /**
+     * 接口-- 后台产品搜索接口--的使用
+     * @param session
+     * @param productId
+     * @return
+     */
+    @RequestMapping("search.do")
+    @ResponseBody
+    public ServerResponse productSearch(HttpSession session, String productName, Integer productId, @RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMassage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登陆管理员");
+        }
+        if (iUserService.checkAdminRole(user).isSuccess()) {
+            // 填充业务代码
+            return iProductService.searchProduct(productName, productId, pageNum, pageSize);
+        } else {
+            return ServerResponse.createByErrorMassage("你所在的用户组无权限操作");
+        }
+    }
+
+
+    public ServerResponse upload(MultipartFile file, HttpServletRequest request) {
+        String path = request.getSession().getServletContext().getRealPath("upload");
+        return null;
     }
 }

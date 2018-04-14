@@ -27,10 +27,30 @@
     from mmall_product
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+
+    <select id="selectList" resultMap="BaseResultMap" >
+      SELECT <include refid="Base_Column_List"/>
+        FROM mmall_product ORDER BY id ASC
+    </select>
+
+    <select id="selectByNameAndProductId" resultMap="BaseResultMap" parameterType="map">
+        SELECT <include refid="Base_Column_List"/>
+        FROM mmall_product
+        <where>
+            <if test="productName != null ">
+                AND name LIKE #{productName}
+            </if>
+            <if test="productId != null ">
+                AND id = #{productId}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from mmall_product
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+    </delete>
+
   <insert id="insert" parameterType="com.mmall.pojo.Product" >
     insert into mmall_product (id, category_id, name, 
       subtitle, main_image, sub_images, 
@@ -43,6 +63,7 @@
       #{status,jdbcType=INTEGER}, now(), now()
       )
   </insert>
+
   <insert id="insertSelective" parameterType="com.mmall.pojo.Product" >
     insert into mmall_product
     <trim prefix="(" suffix=")" suffixOverrides="," >

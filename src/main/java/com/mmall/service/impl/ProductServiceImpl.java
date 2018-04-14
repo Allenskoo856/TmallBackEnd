@@ -1,6 +1,8 @@
 package com.mmall.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.dao.CategoryMapper;
@@ -11,9 +13,12 @@ import com.mmall.service.IProductService;
 import com.mmall.util.DateTimeUtil;
 import com.mmall.util.Propertiesutil;
 import com.mmall.vo.ProductDetailVo;
+import com.mmall.vo.ProductListVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author : Administrator
@@ -102,11 +107,52 @@ public class ProductServiceImpl implements IProductService {
     }
 
 
+    /**
+     * 分页查询工具，输入pageNum  pageSize 输出 分页结果
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
     public ServerResponse getProductList(int pageNum, int pageSize) {
         // 1----startPage-- start
         PageHelper.startPage(pageNum, pageSize);
         // 2-----填充自己的sql逻辑
+        List<Product> productList = productMapper.selectList();
+        List<ProductListVo> productListVoList = Lists.newArrayList();
+        for (Product productItem : productList) {
+            ProductListVo productListVo = assembleProductListVo(productItem);
+            productListVoList.add(productListVo);
+        }
         // 3-----pagehelp--收尾
+        PageInfo pageResult = new PageInfo(productList);
+        pageResult.setList(productListVoList);
+        return ServerResponse.createBySuccess(pageResult);
+    }
+
+    /**
+     * 后台---产品查询功能
+     * @param productName
+     * @param productId
+     * @param pageNumb
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public ServerResponse searchProduct(String productName, Integer productId, int pageNumb, int pageSize) {
+        PageHelper.startPage(pageNumb, pageSize);
+        if (StringUtils.isNoneBlank(productName)) {
+            productName = "%" + productName + "%";
+        }
+        List<Product> productList = productMapper.selectByNameAndProductId(productName, productId);
+        List<ProductListVo> productListVoList = Lists.newArrayList();
+        for (Product productItem : productList) {
+            ProductListVo productListVo = assembleProductListVo(productItem);
+            productListVoList.add(productListVo);
+        }
+        PageInfo pageResult = new PageInfo(productList);
+        pageResult.setList(productListVoList);
+        return ServerResponse.createBySuccess(pageResult);
     }
 
     /**
@@ -144,5 +190,23 @@ public class ProductServiceImpl implements IProductService {
         productDetailVo.setCreateTime(DateTimeUtil.DateToStr(product.getCreateTime()));
         productDetailVo.setUpdateTime(DateTimeUtil.DateToStr(product.getUpdateTime()));
         return productDetailVo;
+    }
+
+    /**
+     * 辅助函数将 pojo对象转换为View Project对象,并且直接返回
+     * @param product
+     * @return
+     */
+    private ProductListVo assembleProductListVo(Product product) {
+        ProductListVo productListVo = new ProductListVo();
+        productListVo.setId(product.getId());
+        productListVo.setName(product.getName());
+        productListVo.setCategoryId(product.getCategoryId());
+        productListVo.setImageHost(Propertiesutil.getProperty("ftp.server.http.prefix","http://img.mmall.com/"));
+        productListVo.setMainImage(product.getMainImage());
+        productListVo.setSubtitle(product.getSubtitle());
+        productListVo.setPrice(product.getPrice());
+        productListVo.setStatus(product.getStatus());
+        return productListVo;
     }
 }
