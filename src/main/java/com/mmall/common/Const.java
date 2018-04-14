@@ -31,4 +31,31 @@
 
          int ROLE_ADMIN = 1;
      }
+
+     public enum ProductStatusElm{
+         ON_SALE(1,"在线");
+         private String value;
+         private int code;
+
+         ProductStatusElm(int code, String value) {
+             this.code = code;
+             this.value = value;
+         }
+
+         public String getValue() {
+             return value;
+         }
+
+         public void setValue(String value) {
+             this.value = value;
+         }
+
+         public int getCode() {
+             return code;
+         }
+
+         public void setCode(int code) {
+             this.code = code;
+         }
+     }
  }
