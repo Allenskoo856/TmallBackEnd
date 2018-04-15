@@ -31,6 +31,15 @@
          Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_desc","price_asc");
      }
 
+     public interface Cart{
+         // 选中状态
+         int CHECKED = 1;
+         // 未选中状态
+         int UNCHECKED = 0;
+         String LIMIT_MUM_FAIL = "LIMIT_MUM_FAIL";
+         String LIMIT_MUM_SUCCESS = "LIMIT_MUM_SUCCESS";
+     }
+
      public interface Role
      {
          // 普通用户
