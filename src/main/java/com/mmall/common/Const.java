@@ -8,6 +8,10 @@
 
  package com.mmall.common;
 
+ import com.google.common.collect.Sets;
+
+ import java.util.Set;
+
  /**
   * 〈一句话功能简述〉<br>
   * 〈〉
@@ -22,6 +26,10 @@
      public static final String EMAIL = "email";
      public static final String USERNAME = "username";
 
+
+     public interface  ProductListOrderBy{
+         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_desc","price_asc");
+     }
 
      public interface Role
      {
