@@ -37,6 +37,10 @@
     SELECT count(1) FROM mmall_cart WHERE checked = 0 AND user_id = #{userId}
   </select>
 
+  <select id="selectCartProductCount" resultType="int" parameterType="int">
+   SELECT IFNULL(sum(quantity),0) AS count FROM mmall_cart WHERE user_id = #{userId}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from mmall_cart
     where id = #{id,jdbcType=INTEGER}
@@ -135,6 +139,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.mmall.pojo.Cart" >
     update mmall_cart
     set user_id = #{userId,jdbcType=INTEGER},
