@@ -27,7 +27,7 @@ public class DateTimeUtil {
         return dateTime.toDate();
     }
 
-    public static String DateToStr(Date date, String formateStr) {
+    public static String dateToStr(Date date, String formateStr) {
         if (date == null) {
             return StringUtils.EMPTY;
         }
@@ -42,7 +42,7 @@ public class DateTimeUtil {
         return dateTime.toDate();
     }
 
-    public static String DateToStr(Date date) {
+    public static String dateToStr(Date date) {
         if (date == null) {
             return StringUtils.EMPTY;
         }

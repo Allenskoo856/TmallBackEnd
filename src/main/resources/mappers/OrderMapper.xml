@@ -29,7 +29,14 @@
     from mmall_order
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+
+    <select id="seslectByUserIdAndOrderNum" resultMap="BaseResultMap" parameterType="map">
+      SELECT <include refid="Base_Column_List"/>
+      FROM mmall_order WHERE order_no = #{orderNo}
+      AND user_id = #{useId}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from mmall_order
     where id = #{id,jdbcType=INTEGER}
   </delete>

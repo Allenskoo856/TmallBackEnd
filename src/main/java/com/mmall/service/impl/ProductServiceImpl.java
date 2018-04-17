@@ -264,8 +264,8 @@ public class ProductServiceImpl implements IProductService {
         }
         // createTime
         // UpdateTime 转换
-        productDetailVo.setCreateTime(DateTimeUtil.DateToStr(product.getCreateTime()));
-        productDetailVo.setUpdateTime(DateTimeUtil.DateToStr(product.getUpdateTime()));
+        productDetailVo.setCreateTime(DateTimeUtil.dateToStr(product.getCreateTime()));
+        productDetailVo.setUpdateTime(DateTimeUtil.dateToStr(product.getUpdateTime()));
         return productDetailVo;
     }
 
