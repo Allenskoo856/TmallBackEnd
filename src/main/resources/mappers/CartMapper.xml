@@ -41,7 +41,13 @@
    SELECT IFNULL(sum(quantity),0) AS count FROM mmall_cart WHERE user_id = #{userId}
   </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectCheckedCartByUserId" parameterType="int" resultMap="BaseResultMap">
+      SELECT
+        <include refid="Base_Column_List"/>
+      FROM mmall_cart WHERE user_id = #{userId} AND checked = 1
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from mmall_cart
     where id = #{id,jdbcType=INTEGER}
   </delete>

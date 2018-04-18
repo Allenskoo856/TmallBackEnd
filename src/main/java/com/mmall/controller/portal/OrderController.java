@@ -91,6 +91,14 @@ public class OrderController {
     }
 
 
+    /**
+     * 支付接口---完成
+     * @param session
+     * @param orderNo
+     * @param request
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("pay.do")
     @ResponseBody
     public ServerResponse pay(HttpSession session, Long orderNo, HttpServletRequest request) throws IOException {
@@ -102,6 +110,11 @@ public class OrderController {
         return iOrderService.pay(orderNo,user.getId(),path);
     }
 
+    /**
+     * 支付宝的回调用接口
+     * @param request
+     * @return
+     */
     @RequestMapping("alipay_callback.do")
     @ResponseBody
     public Object alipayCallback(HttpServletRequest request){
@@ -142,6 +155,12 @@ public class OrderController {
     }
 
 
+    /**
+     * 查询订单状态的接口--已经撸完了
+     * @param session
+     * @param orderNo
+     * @return
+     */
     @RequestMapping("query_order_pay_status.do")
     @ResponseBody
     public ServerResponse<Boolean> queryOrderPayStatus(HttpSession session, Long orderNo){
@@ -156,23 +175,4 @@ public class OrderController {
         }
         return ServerResponse.createBySuccess(false);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
