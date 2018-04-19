@@ -121,28 +121,21 @@ public class OrderServiceImpl implements IorderService {
         orderVo.setPayment(order.getPayment());
         orderVo.setPaymentType(order.getPaymentType());
         orderVo.setPaymentTypeDesc(Const.PaymentTypeEnum.codeOf(order.getPaymentType()).getValue());
-
         orderVo.setPostage(order.getPostage());
         orderVo.setStatus(order.getStatus());
         orderVo.setStatusDesc(Const.OrderStatusEnum.codeOf(order.getStatus()).getValue());
-
         orderVo.setShippingId(order.getShippingId());
         Shipping shipping = shippingMapper.selectByPrimaryKey(order.getShippingId());
         if(shipping != null){
             orderVo.setReceiverName(shipping.getReceiverName());
             orderVo.setShippingVo(assembleShippingVo(shipping));
         }
-
         orderVo.setPaymentTime(DateTimeUtil.dateToStr(order.getPaymentTime()));
         orderVo.setSendTime(DateTimeUtil.dateToStr(order.getSendTime()));
         orderVo.setEndTime(DateTimeUtil.dateToStr(order.getEndTime()));
         orderVo.setCreateTime(DateTimeUtil.dateToStr(order.getCreateTime()));
         orderVo.setCloseTime(DateTimeUtil.dateToStr(order.getCloseTime()));
-
-
         orderVo.setImageHost(Propertiesutil.getProperty("ftp.server.http.prefix"));
-
-
         List<OrderItemVo> orderItemVoList = Lists.newArrayList();
 
         for(OrderItem orderItem : orderItemList){
@@ -337,7 +330,7 @@ public class OrderServiceImpl implements IorderService {
         for(Order order : orderList){
             List<OrderItem>  orderItemList = Lists.newArrayList();
             if(userId == null){
-                //todo 管理员查询的时候 不需要传userId
+                // 管理员查询的时候 不需要传userId
                 orderItemList = orderItemMapper.getByOrderNo(order.getOrderNo());
             }else{
                 orderItemList = orderItemMapper.getByOrderNoUserId(order.getOrderNo(),userId);
