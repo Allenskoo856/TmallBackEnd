@@ -20,12 +20,14 @@
 
     <dependencies>
 
+        <!--tomcat 安装-->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-servlet-api</artifactId>
             <version>7.0.64</version>
         </dependency>
 
+        <!--SpringFrameWork-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -38,56 +40,55 @@
             <artifactId>lombok</artifactId>
             <version>1.16.20</version>
         </dependency>
-
+        <!--SpringFrameWork-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-oxm</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
-
+        <!--SpringFrameWork-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
-
+        <!--SpringFrameWork-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
-
+        <!--SpringFrameWork-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
-
-
+        <!--SpringFrameWork-->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
             <version>1.7.3</version>
         </dependency>
-
+        <!--SpringFrameWork-->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
             <version>${org.mybatis.spring.version}</version>
         </dependency>
-
+        <!--SpringFrameWork-->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
             <version>${org.mybatis.version}</version>
         </dependency>
-
+        <!--SpringFrameWork-->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
             <version>1.6.11</version>
         </dependency>
-
+        <!--SpringFrameWork-->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
@@ -98,9 +99,7 @@
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
-            <!--<scope>runtime</scope>-->
         </dependency>
-
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -128,20 +127,17 @@
             <version>20.0</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.5</version>
         </dependency>
 
-
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>3.2.1</version>
         </dependency>
-
 
         <dependency>
             <groupId>junit</groupId>
@@ -157,14 +153,12 @@
             <version>2.3</version>
         </dependency>
 
-
         <!-- id加密解密 -->
         <dependency>
             <groupId>org.hashids</groupId>
             <artifactId>hashids</artifactId>
             <version>1.0.1</version>
         </dependency>
-
 
         <!-- ftpClient -->
         <dependency>
@@ -188,7 +182,6 @@
             <version>2.0.1</version>
         </dependency>
 
-
         <!-- mybatis pager -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
@@ -207,7 +200,6 @@
             <artifactId>jsqlparser</artifactId>
             <version>0.9.4</version>
         </dependency>
-
 
         <!-- AliPay -->
         <dependency>
@@ -246,6 +238,7 @@
             <version>1.3</version>
         </dependency>
 
+        <!--jedsi redis客户端-->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
