@@ -69,6 +69,7 @@
         <!--<appender-ref ref="console"/>-->
     <!--</logger>-->
 
+
     <root level="DEBUG">
         <appender-ref ref="console"/>
         <appender-ref ref="error"/>

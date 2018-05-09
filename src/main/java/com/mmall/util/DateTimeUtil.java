@@ -13,9 +13,7 @@ import java.util.Date;
  * @create 2018-04-13 21:13
  */
 public class DateTimeUtil {
-
-    // joda-time
-
+    
     // str - date
     public static final String STANDARD_FROMAT = "yyyy-MM-dd HH:mm:ss";
 
