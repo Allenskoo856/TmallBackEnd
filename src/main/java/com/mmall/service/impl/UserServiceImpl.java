@@ -57,6 +57,7 @@
 
      /**
       * 用户注册的实现
+      *
       * @param user user
       * @return ServerResponse<String>
       */
@@ -87,7 +88,8 @@
      }
 
      /**
-      *  校验邮箱以及密码的正确与否
+      * 校验邮箱以及密码的正确与否
+      *
       * @param str  传入的值
       * @param type : email 或者 username 两种
       * @return 返回验证信息
@@ -95,7 +97,7 @@
      @Override
      public ServerResponse<String> checkValid(String str, String type) {
          if (StringUtils.isNoneBlank(type)) {
-            // 开始校验
+             // 开始校验
              if (Const.USERNAME.equals(type)) {
                  int resultCount = userMapper.checkUsername(str);
                  if (resultCount > 0) {
@@ -115,9 +117,10 @@
      }
 
      /**
-      *   根据用户名返回忘记密码的提示问题
+      * 根据用户名返回忘记密码的提示问题
+      *
       * @param username 用户名提示
-      * @return  成功返回密码提示问题， 失败返回错误提示
+      * @return 成功返回密码提示问题， 失败返回错误提示
       */
      @Override
      public ServerResponse selectQuestion(String username) {
@@ -135,6 +138,7 @@
 
      /**
       * 传入用户名，问题，和答案
+      *
       * @param username
       * @param qusetion
       * @param answer
@@ -155,6 +159,7 @@
 
      /**
       * 传入用户名、新密码、以及token来重置密码
+      *
       * @param username
       * @param passwordNew
       * @param forgetToken
@@ -188,7 +193,8 @@
      }
 
      /**
-      *  此为 登录用户的重置密码功能
+      * 此为 登录用户的重置密码功能
+      *
       * @param passwordNew
       * @param passwordOld
       * @param user
@@ -211,6 +217,7 @@
 
      /**
       * 登录用户更新个人的信息
+      *
       * @param user
       * @return 更新成功，返回提示信息和跟新之后的用户信息，更新失败返回 错误信息
       */
@@ -238,7 +245,6 @@
 
 
      /**
-      *
       * @param userId
       * @return
       */
@@ -254,8 +260,9 @@
 
      /**
       * 后台管理员账号的校验
+      *
       * @param user
-      * @return  如果是管理员则返回true 否则提示错误信息
+      * @return 如果是管理员则返回true 否则提示错误信息
       */
      // backEnd 校验
      @Override

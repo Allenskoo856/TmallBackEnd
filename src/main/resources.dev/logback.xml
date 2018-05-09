@@ -48,8 +48,6 @@
         <appender-ref ref="console"/>
     </logger>
 
-
-
     <!-- geelynote mybatis log 日志 -->
 
     <logger name="com.mmall.dao" level="DEBUG"/>
@@ -68,7 +66,6 @@
     <!--<logger name="java.sql.PreparedStatement" level="DEBUG">-->
         <!--<appender-ref ref="console"/>-->
     <!--</logger>-->
-
 
     <root level="DEBUG">
         <appender-ref ref="console"/>

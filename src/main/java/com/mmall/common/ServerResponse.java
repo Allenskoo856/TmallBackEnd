@@ -70,6 +70,7 @@
 
      /**
       * 创建响应成功信息代码
+      *
       * @param <T>
       * @return
       */
@@ -79,6 +80,7 @@
 
      /**
       * 创建响应成功信息
+      *
       * @param msg
       * @param <T>
       * @return
@@ -89,6 +91,7 @@
 
      /**
       * 根据传入的数据不同，创建响应的代码片段的代码
+      *
       * @param data
       * @param <T>
       * @return
@@ -98,7 +101,8 @@
      }
 
      /**
-      *创建成功的服务器响应，需要把消息和数据仪器传入
+      * 创建成功的服务器响应，需要把消息和数据仪器传入
+      *
       * @param msg
       * @param data
       * @param <T>
@@ -111,6 +115,7 @@
 
      /**
       * 传入错误的响应代码和信息
+      *
       * @param <T>
       * @return
       */
@@ -121,6 +126,7 @@
 
      /**
       * 传入错误的响应信息
+      *
       * @param errorMassage
       * @param <T>
       * @return
@@ -131,7 +137,6 @@
 
 
      /**
-      *
       * @param errorCode
       * @param errorMessage
       * @param <T>
