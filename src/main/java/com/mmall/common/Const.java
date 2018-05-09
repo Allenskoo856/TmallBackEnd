@@ -27,10 +27,10 @@
      public static final String USERNAME = "username";
 
      /**
-      * redis--缓存时间30分钟
+      * redis--缓存时间120分钟
       */
      public interface RedisCacheExtime {
-         int REDIS_SESSION_EXTIME = 60 * 30;
+         int REDIS_SESSION_EXTIME = 60 * 120;
      }
 
      public interface ProductListOrderBy {
