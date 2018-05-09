@@ -300,12 +300,7 @@
                 <deploy.type>dev</deploy.type>
             </properties>
         </profile>
-        <profile>
-            <id>beta</id>
-            <properties>
-                <deploy.type>beta</deploy.type>
-            </properties>
-        </profile>
+
         <profile>
             <id>prod</id>
             <properties>

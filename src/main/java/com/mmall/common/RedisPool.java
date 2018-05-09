@@ -25,7 +25,7 @@ public class RedisPool {
     // redis 服务器IP
     private static String redisIp = Propertiesutil.getProperty("redis.ip");
     // redis 端口号
-    private static Integer redisPort = Integer.parseInt(Propertiesutil.getProperty("redis.port"));
+    private static int redisPort = Integer.parseInt(Propertiesutil.getProperty("redis.port"));
     // redis 的密码
     private static String redisPass = String.valueOf(Propertiesutil.getProperty("redis.password"));
 
@@ -42,7 +42,7 @@ public class RedisPool {
         config.setTestOnReturn(testOnReturn);
         // 连接耗尽的时候，是否阻塞，false会抛出异常，true阻塞直到超时。默认为true。
         config.setBlockWhenExhausted(true);
-        pool = new JedisPool(config, redisIp, redisPort, 1000 * 2, redisPass,0);
+        pool = new JedisPool(config, redisIp, redisPort, 1000 * 2, redisPass);
     }
 
     /**
