@@ -1,7 +1,6 @@
 <html lang="en">
 <header>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=UTF-8" />
     <meta name="renderer" content="webkit">
     <title>宝塔Linux面板</title>
 </header>
@@ -9,8 +8,7 @@
     <h2>Hello World!</h2>
 
     <h3>SpringMvc 上传文件</h3>
-    <form action="${pageContext.request.contextPath}/manage/product/upload.do" name="form1" method="post" enctype="multipart/form-data">
-
+    <form action="${pageContext.request.contextPath}/manage/product/upload_test.do" name="form1" method="post" enctype="multipart/form-data">
         <input type="file" name="upload_file">
         <input type="submit" value="上传文件 ">
     </form>

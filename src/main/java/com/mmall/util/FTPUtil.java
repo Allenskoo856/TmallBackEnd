@@ -34,13 +34,28 @@ public class FTPUtil {
         this.ip = ip;
     }
 
+    /**
+     * 上传文件--FTP
+     *
+     * @param fileList
+     * @return
+     * @throws IOException
+     */
     public static boolean uploadFile(List<File> fileList) throws IOException {
         FTPUtil ftpUtil = new FTPUtil(ftpIp, 21, ftpUser, ftpPass);
-        boolean result = ftpUtil.uploadFile("img", fileList);
+        boolean result = ftpUtil.uploadFile("/", fileList);
         logger.info("开始链接FTP服务器，结束上传，上传结果{}", result);
         return result;
     }
 
+    /**
+     * FTP--文件
+     *
+     * @param remotePath remotePath
+     * @param fileList   fileList 文件
+     * @return
+     * @throws IOException
+     */
     private boolean uploadFile(String remotePath, List<File> fileList) throws IOException {
         boolean uploaded = true;
         FileInputStream fis = null;
@@ -48,7 +63,7 @@ public class FTPUtil {
         if (connecteServer(this.ip, this.port, this.user, this.pwd)) {
             try {
                 ftpClient.changeWorkingDirectory(remotePath);
-                ftpClient.setBufferSize(1024);
+                ftpClient.setBufferSize(1024 * 1024);
                 ftpClient.setControlEncoding("UTF-8");
                 ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
                 ftpClient.enterLocalActiveMode();
@@ -60,6 +75,7 @@ public class FTPUtil {
                 logger.error("上传文件异常", e);
                 uploaded = false;
             } finally {
+                assert fis != null;
                 fis.close();
                 ftpClient.disconnect();
             }
@@ -67,6 +83,15 @@ public class FTPUtil {
         return uploaded;
     }
 
+    /**
+     * 联结服务器--
+     *
+     * @param ip   ip
+     * @param port port
+     * @param user user
+     * @param pwd  pwd
+     * @return boolean
+     */
     private boolean connecteServer(String ip, int port, String user, String pwd) {
         boolean isSuccess = false;
         ftpClient = new FTPClient();
@@ -118,6 +143,4 @@ public class FTPUtil {
     public void setFtpClient(FTPClient ftpClient) {
         this.ftpClient = ftpClient;
     }
-
-
 }

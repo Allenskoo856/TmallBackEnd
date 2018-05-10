@@ -143,7 +143,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-            <!--<scope>test</scope>-->
         </dependency>
 
         <!--时间处理的jar包-->
@@ -168,7 +167,6 @@
         </dependency>
 
         <!-- file Upload -->
-
         <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -200,6 +198,7 @@
             <artifactId>jsqlparser</artifactId>
             <version>0.9.4</version>
         </dependency>
+        <!-- mybatis pager -->
 
         <!-- AliPay -->
         <dependency>
@@ -245,6 +244,12 @@
             <version>2.9.0</version>
         </dependency>
 
+        <!--AlliYun-OSS API-->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>2.8.2</version>
+        </dependency>
     </dependencies>
 
 

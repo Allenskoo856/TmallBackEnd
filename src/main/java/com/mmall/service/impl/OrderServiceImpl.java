@@ -14,6 +14,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.mmall.aliyunoss.AliyunOssConfigre;
 import com.mmall.common.Const;
 import com.mmall.common.ServerResponse;
 import com.mmall.dao.*;
@@ -414,7 +415,8 @@ public class OrderServiceImpl implements IorderService {
                 .setUndiscountableAmount(undiscountableAmount).setSellerId(sellerId).setBody(body)
                 .setOperatorId(operatorId).setStoreId(storeId).setExtendParams(extendParams)
                 .setTimeoutExpress(timeoutExpress)
-                .setNotifyUrl(Propertiesutil.getProperty("alipay.callback.url"))//支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
+                //支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
+                .setNotifyUrl(Propertiesutil.getProperty("alipay.callback.url"))
                 .setGoodsDetailList(goodsDetailList);
 
 
@@ -440,7 +442,7 @@ public class OrderServiceImpl implements IorderService {
 
                 File targetFile = new File(path,qrFileName);
                 try {
-                    FTPUtil.uploadFile(Lists.newArrayList(targetFile));
+                    AliyunOssConfigre.uploadFile(targetFile.getName(), Lists.newArrayList(targetFile));
                 } catch (IOException e) {
                     logger.error("上传二维码异常",e);
                 }

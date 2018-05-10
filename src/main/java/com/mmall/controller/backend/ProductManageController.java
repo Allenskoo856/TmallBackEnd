@@ -194,8 +194,8 @@ public class ProductManageController {
      */
     @RequestMapping("upload.do")
     @ResponseBody
-    public ServerResponse upload(HttpServletRequest httpServletRequest, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
-        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
+    public ServerResponse upload(@RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
+        String loginToken = CookieUtil.readLoginToken(request);
         if (StringUtils.isEmpty(loginToken)) {
             return ServerResponse.createByErrorMassage("用户未登录,无法获取当前用户的信息");
         }
@@ -216,6 +216,18 @@ public class ProductManageController {
         } else {
             return ServerResponse.createByErrorMassage("你所在的用户组无权限操作");
         }
+    }
+
+    @RequestMapping("upload_test.do")
+    @ResponseBody
+    public ServerResponse upload2(@RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
+        String path = request.getSession().getServletContext().getRealPath("upload");
+        String targetFileName = iFileService.upload(file, path);
+        String url = Propertiesutil.getProperty("aliyun.SCNHttpUrl") + targetFileName;
+        Map fileMap = Maps.newHashMap();
+        fileMap.put("uri", targetFileName);
+        fileMap.put("url", url);
+        return ServerResponse.createBySuccess(fileMap);
     }
 
 
