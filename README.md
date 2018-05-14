@@ -6,6 +6,10 @@
 
 ---
 
+#### 线上Demo展示
+
+http://mmall.zonglun.me
+
 #### 项目开发环境
 
 **IDEA + Maven + Tomcat8 + Git + Mysql + Redis**
@@ -50,17 +54,17 @@ main
 
 #### 后台详细的接口文档
 
-| 编号 |        接口        | 详情 |
-| :--: | :----------------: | :--: |
-|  1   |  前台商品模块接口  | 文档 |
-|  2   |  前台用户模块接口  | 文档 |
-|  3   |  前台订单模块接口  | 文档 |
-|  4   |  前台支付模块接口  | 文档 |
-|  5   | 前台购物车模块接口 | 文档 |
-|  6   |  后台品类模块接口  | 文档 |
-|  7   |  后台订单模块接口  | 文档 |
-|  8   |  后台产品模块接口  | 文档 |
-|  9   |  后台用户模块接口  | 文档 |
+| 编号 |        接口        |                             详情                             |
+| :--: | :----------------: | :----------------------------------------------------------: |
+|  1   |  前台商品模块接口  | [文档](https://github.com/Allenskoo856/TmallFontEnd/wiki/%E9%97%A8%E6%88%B7_%E4%BA%A7%E5%93%81%E6%8E%A5%E5%8F%A3) |
+|  2   |  前台用户模块接口  | [文档](https://github.com/Allenskoo856/TmallFontEnd/wiki/%E9%97%A8%E6%88%B7_%E7%94%A8%E6%88%B7%E6%8E%A5%E5%8F%A3) |
+|  3   |  前台订单模块接口  | [文档](https://github.com/Allenskoo856/TmallFontEnd/wiki/%E9%97%A8%E6%88%B7_%E8%AE%A2%E5%8D%95%E6%8E%A5%E5%8F%A3) |
+|  4   |  前台支付模块接口  | [文档](https://github.com/Allenskoo856/TmallFontEnd/wiki/%E9%97%A8%E6%88%B7_%E6%94%AF%E4%BB%98%E6%8E%A5%E5%8F%A3) |
+|  5   | 前台购物车模块接口 | [文档](https://github.com/Allenskoo856/TmallFontEnd/wiki/%E9%97%A8%E6%88%B7_%E8%B4%AD%E7%89%A9%E8%BD%A6%E6%8E%A5%E5%8F%A3) |
+|  6   |  后台品类模块接口  |                             文档                             |
+|  7   |  后台订单模块接口  |                             文档                             |
+|  8   |  后台产品模块接口  | [文档](https://github.com/Allenskoo856/TmallFontEnd/wiki/%E5%90%8E%E5%8F%B0_%E4%BA%A7%E5%93%81%E6%8E%A5%E5%8F%A3) |
+|  9   |  后台用户模块接口  |                             文档                             |
 
 ---
 
