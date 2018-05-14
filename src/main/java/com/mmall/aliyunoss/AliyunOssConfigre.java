@@ -26,18 +26,9 @@ public class AliyunOssConfigre {
     private static ClientConfiguration conf = new ClientConfiguration();
     private static OSSClient client;
 
-    // 开启支持CNAME选项
-    static {
-        conf.setMaxConnections(200);
-        conf.setSocketTimeout(10000);
-        conf.setMaxErrorRetry(5);
-        conf.setSupportCname(SupportCname);
-        // 创建OSSClient实例
-        client = new OSSClient(endpoint, accessKeyId, accessKeySecret, conf);
-    }
 
     /**
-     * 辅助方法、上传文件
+     * 方法、上传文件
      *
      * @param key      文件的上传的名字
      * @param fileList 文件
@@ -46,7 +37,7 @@ public class AliyunOssConfigre {
      */
     public static boolean uploadFile(String key, List<File> fileList) throws FileNotFoundException {
         boolean result = AliyunOssConfigre.uploadFile(bucketName, key, fileList);
-        logger.info("开始链接FTP服务器，结束上传，上传结果{}", result);
+        logger.info("开始链接OSS服务器，结束上传，上传结果{}", result);
         return result;
     }
 
@@ -62,6 +53,7 @@ public class AliyunOssConfigre {
      */
     private static boolean uploadFile(String bucketName, String key, List<File> fileList) throws FileNotFoundException {
         boolean uploaded = true;
+        getConnectedServer(endpoint, accessKeyId, accessKeySecret);
         try {
             if (!client.doesBucketExist(bucketName)) {
                 client.createBucket(bucketName);
@@ -77,6 +69,22 @@ public class AliyunOssConfigre {
             client.shutdown();
         }
         return uploaded;
+    }
+
+    /**
+     * 连接服务器
+     * @param endpoint
+     * @param accessKeyId
+     * @param accessKeySecret
+     * @return
+     */
+    private static boolean getConnectedServer(String endpoint, String accessKeyId, String accessKeySecret) {
+        conf.setMaxConnections(200);
+        conf.setSocketTimeout(10000);
+        conf.setMaxErrorRetry(5);
+        conf.setSupportCname(SupportCname);
+        client = new OSSClient(endpoint, accessKeyId, accessKeySecret, conf);
+        return true;
     }
 
 }

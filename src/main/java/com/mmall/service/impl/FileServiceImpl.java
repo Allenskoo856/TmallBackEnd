@@ -3,7 +3,6 @@ package com.mmall.service.impl;
 import com.google.common.collect.Lists;
 import com.mmall.aliyunoss.AliyunOssConfigre;
 import com.mmall.service.IFileService;
-import com.mmall.util.FTPUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -47,8 +46,6 @@ public class FileServiceImpl implements IFileService {
         try {
             file.transferTo(targetFile);
             // 文件上传成功
-            //  将targetFile上传到FTP服务器
-            // FTPUtil.uploadFile(Lists.newArrayList(targetFile));
             AliyunOssConfigre.uploadFile(targetFile.getName(), Lists.newArrayList(targetFile));
             //  上传完后删除upload文件
            targetFile.delete();
@@ -58,5 +55,4 @@ public class FileServiceImpl implements IFileService {
         }
         return targetFile.getName();
     }
-
 }
